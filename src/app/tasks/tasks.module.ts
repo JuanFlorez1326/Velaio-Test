@@ -4,20 +4,37 @@ import { RouterModule, Routes } from '@angular/router';
 import { TasksPageComponent } from './containers/tasks-page/tasks-page.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
+import { TasksComponent } from './components/tasks/tasks.component';
+import { AllTasksPageComponent } from './containers/all-tasks-page/all-tasks-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TasksPageComponent,
-    children: []
+    component: TasksComponent,
+    children: [
+      {
+        path: 'create',
+        component: TasksPageComponent
+      },
+      {
+        path: 'list',
+        component: AllTasksPageComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'create',
+      }
+    ]
   }
 ];
 
 @NgModule({
   declarations: [
+    TasksComponent,
     TasksPageComponent,
+    ListTasksComponent,
     CreateTaskComponent,
-    ListTasksComponent
+    AllTasksPageComponent
   ],
   imports: [
     CommonModule,

@@ -11,12 +11,12 @@ export class SidenavComponent {
   public sidenavOptions: CustomRoutes[] = [
     {
       name: 'Create tasks',
-      route: '/create',
+      route: 'tasks/create',
       icon: 'fas fa-plus'
     },
     {
       name: 'Lists tasks',
-      route: '/list',
+      route: 'tasks/list',
       icon: 'fas fa-tasks'
     }
   ];

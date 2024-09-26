@@ -85,7 +85,10 @@ mat-sidenav {
         }
 
         .active {
-            color: $blue-color;
+            span {
+                color: $blue-color;
+
+            }
 
             em {
                 color: $blue-color;
