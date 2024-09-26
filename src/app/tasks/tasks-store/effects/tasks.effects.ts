@@ -20,9 +20,6 @@ export class TasksEffects {
             mergeMap((action: fromActions.AddTask) => {
                 return this.taskService.addTask(action.payload).pipe(
                     map((response: Task) => {     
-                        console.log(response);
-                        console.log(action.payload);
-                        debugger;
                         return new fromActions.AddTaskSuccess(action.payload);
                     }),
                     catchError((error: any) => {

@@ -1,1 +1,51 @@
-<p>card-task works!</p>
+<div class="filter-cards">
+    <button mat-raised-button color="primary">Completed</button>
+    <button mat-stroked-button color="basic">Pending</button>
+</div>
+
+<div *ngIf="!isLoadingCard" class="container-all-cards">
+    <mat-card class="card-task" *ngFor="let task of tasksCard" [id]="task.id">
+        <mat-card-header>
+            <mat-card-title>
+                <button mat-icon-button *ngIf="true">
+                    <em class="fa-regular fa-circle"></em>
+                </button>
+
+                <button mat-icon-button *ngIf="false">
+                    <em class="fa-regular fa-circle-check"></em>
+                </button>
+
+                <strong>{{ task.nameTask | titlecase }}</strong>
+            </mat-card-title>
+            <mat-card-subtitle>{{ task.limitDate }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="card-content">
+            <strong>Associated persons:</strong>
+            <ul *ngFor="let person of task.people">
+                <li>{{ person.fullName | titlecase }} - Age: {{ person.age }}</li>
+
+                <h4>Skills:</h4>
+
+                <ul *ngFor="let skill of person.skills">
+                    <li>{{ skill.nameSkill | titlecase }}</li>
+                </ul>
+            </ul>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <div class="actions-card">
+                <button mat-icon-button color="primary" (click)="editTask(task)">
+                    <em class="fa-regular fa-pen-to-square"></em>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTask(task)">
+                    <em class="fa-regular fa-trash-can"></em>
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<div *ngIf="isLoadingCard">
+    <mat-spinner></mat-spinner>
+</div>

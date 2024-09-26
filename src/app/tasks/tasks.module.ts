@@ -9,6 +9,7 @@ import { AllTasksPageComponent } from './containers/all-tasks-page/all-tasks-pag
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TasksStoreModule } from './tasks-store/tasks-store.module';
+import { CardTaskComponent } from '../shared/components/card-task/card-task.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     SharedModule,
     CommonModule,
     TasksStoreModule,
+    CardTaskComponent,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ]
