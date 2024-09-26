@@ -1,0 +1,28 @@
+.filter-cards {
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        margin: 0 10px;
+        width: 110px;
+    }
+}
+
+.container-all-cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    justify-content: space-evenly;
+}
+
+.card-task {
+    width: 350px;
+
+    .actions-card {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        border-radius: 4px;
+    }
+}

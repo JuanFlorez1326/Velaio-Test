@@ -1,0 +1,91 @@
+<mat-card class="create-task-form">
+
+    <form class="example-form" [formGroup]="taskForm">
+
+        <span class="create-task-title">{{ isId ? 'Edit': 'Create' }} Task:</span>
+
+        <mat-form-field class="form-field-group" appearance="outline">
+            <mat-label>Name Task</mat-label>
+            <input type="text" matInput formControlName="nameTask">
+            <mat-error
+                *ngIf="taskForm.get('nameTask')?.hasError('required') && taskForm.get('nameTask')?.touched"
+            >This field is required</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="form-field-group" appearance="outline">
+            <mat-label>Limit Date</mat-label>
+            <input type="text" matInput formControlName="limitDate">
+            <mat-error 
+                *ngIf="taskForm.get('limitDate')?.hasError('required') && taskForm.get('limitDate')?.touched"
+            >This field is required</mat-error>
+        </mat-form-field>
+
+        <span class="create-task-title" *ngIf="taskForm.get('people')?.value.length > 0">
+            Associated persons:
+        </span>
+
+        <div formArrayName="people">
+            <div *ngFor="let people of people.controls; let i=index" [formGroupName]="i">
+                <mat-form-field class="form-field-group" appearance="outline">
+                    <mat-label>Full Name</mat-label>
+                    <input type="text" matInput formControlName="fullName">
+                    <mat-error
+                        *ngIf="people.get('fullName')?.hasError('required') && people.get('fullName')?.touched"
+                    >This field is required</mat-error>
+                    <mat-error
+                        *ngIf="people.get('fullName')?.hasError('minlength') && people.get('fullName')?.touched"
+                    >This field must be at least 5 characters long</mat-error>
+                </mat-form-field>
+        
+                <mat-form-field class="form-field-group" appearance="outline">
+                    <mat-label>Age</mat-label>
+                    <input type="number" matInput formControlName="age">
+                    <mat-error
+                        *ngIf="people.get('age')?.hasError('required') && people.get('age')?.touched"
+                    >This field is required</mat-error>
+                    <mat-error
+                        *ngIf="people.get('age')?.hasError('min') && people.get('age')?.touched"
+                    >The minimum age must be 18 years</mat-error>
+                </mat-form-field>
+
+                <span class="create-task-title">Person's skills:</span>
+
+                <div formArrayName="skills">
+                    <div class="container-skills" *ngFor="let skill of getSkills(i).controls; let j=index" [formGroupName]="j">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Skill</mat-label>
+                            <input type="text" matInput formControlName="nameSkill">
+                            <mat-error
+                                *ngIf="skill.get('nameSkill')?.hasError('required') && skill.get('nameSkill')?.touched"
+                            >
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+
+                        <div class="container-btn-skill">
+                            <button mat-icon-button color="warn" (click)="removeSkill(i, j)">
+                                <em class="fas fa-trash-alt"></em>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-actions-tasks">
+                    <button mat-raised-button color="primary" type="button" (click)="addSkill(i)">Add skill</button>
+                    <button mat-raised-button color="warn" type="button" (click)="removePeople(i)">Remove person</button>
+                </div>
+
+                <div class="divider-sections"></div>
+            </div>
+        </div>
+
+        <button mat-stroked-button color="primary" type="button" (click)="addPeople()">Add person</button>
+
+        <div class="container-btn-save">
+            <button mat-raised-button color="primary" [disabled]="this.taskForm.invalid" (click)="saveTask()">
+                Save Task
+            </button>
+        </div>
+    </form>
+
+</mat-card>
