@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Task } from '../../interfaces/tasks.interface';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-create-task',
@@ -9,15 +12,28 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CreateTaskComponent {
 
   public taskForm!: FormGroup;
+  public isId: boolean = false;
+
+  @Input() taskToEdit: Task | null = null;
 
   @Output() emitNewTask: EventEmitter<any> = new EventEmitter();
+  @Output() emitEditTask: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private taskService: TaskService,
   ) {}  
 
   ngOnInit(): void {
     this.newTask();
+    const taskId = this.route.snapshot.paramMap.get('id');
+
+    if (taskId) {
+      this.isId = true;
+      const task = this.taskService.getTaskById(Number(taskId));
+      this.setTaskToForm(task);
+    }
   }
 
   get people() {
@@ -73,12 +89,27 @@ export class CreateTaskComponent {
     this.getSkills(indexPeople).removeAt(indexSkill);
   }
 
+  public setTaskToForm(task: Task): void {
+    this.taskForm.patchValue(task);
+
+    task.people.forEach((person) => {
+      this.people.push(
+        this.fb.group({
+          fullName: person.fullName,
+          age: person.age,
+          skills: this.fb.array(person.skills.map((skill: any) => this.fb.group({ nameSkill: skill.nameSkill })))
+        })
+      );
+    });
+  }
+
   public saveTask(): void {
-    if (this.taskForm.valid) {
-      this.emitNewTask.emit(this.taskForm.value);
-      this.newTask();
+    debugger;
+    if (this.taskForm.invalid) return;
+    if (this.isId) {
+      this.emitEditTask.emit(this.taskForm.value);
     } else {
-      console.log('Invalid Form');
+      this.emitNewTask.emit(this.taskForm.value);
     }
   }
 }

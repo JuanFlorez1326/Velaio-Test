@@ -2,7 +2,7 @@
 
     <form class="example-form" [formGroup]="taskForm">
 
-        <span class="create-task-title">Create Task:</span>
+        <span class="create-task-title">{{ isId ? 'Edit': 'Create' }} Task:</span>
 
         <mat-form-field class="form-field-group" appearance="outline">
             <mat-label>Name Task</mat-label>
@@ -79,10 +79,12 @@
             </div>
         </div>
 
-        <button mat-raised-button color="primary" type="button" (click)="addPeople()">Add person</button>
+        <button mat-stroked-button color="primary" type="button" (click)="addPeople()">Add person</button>
 
         <div class="container-btn-save">
-            <button mat-raised-button color="primary" (click)="saveTask()">Save Task</button>
+            <button mat-raised-button color="primary" [disabled]="this.taskForm.invalid" (click)="saveTask()">
+                Save Task
+            </button>
         </div>
     </form>
 
