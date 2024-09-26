@@ -2,6 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  template: ` <app-sidenav></app-sidenav>`
 })
 export class AppComponent {}
