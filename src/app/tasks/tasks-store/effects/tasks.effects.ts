@@ -5,11 +5,13 @@ import * as fromActions from '../actions/tasks.actions';
 import { TaskService } from '../../services/task.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, catchError, map, mergeMap, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TasksEffects {
     
     constructor(
+        private router: Router,
         private actions$: Actions,
         private taskService: TaskService
     ) {}
@@ -19,7 +21,8 @@ export class TasksEffects {
             ofType(fromActions.TasksActionsTypes.ADD_TASK),
             mergeMap((action: fromActions.AddTask) => {
                 return this.taskService.addTask(action.payload).pipe(
-                    map((response: Task) => {     
+                    map(() => {     
+                        this.router.navigate(['/tasks/list']);
                         return new fromActions.AddTaskSuccess(action.payload);
                     }),
                     catchError((error: any) => {
@@ -51,7 +54,8 @@ export class TasksEffects {
             ofType(fromActions.TasksActionsTypes.UPDATE_TASK),
             mergeMap((action: fromActions.UpdateTask) => {
                 return this.taskService.updateTask(action.payload.id, action.payload).pipe(
-                    map((response: Task) => {
+                    map(() => {
+                        this.router.navigate(['/tasks/list']);
                         return new fromActions.UpdateTaskSuccess({ id: action.payload.id, changes: action.payload });
                     }),
                     catchError((error: any) => {

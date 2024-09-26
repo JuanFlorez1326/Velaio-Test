@@ -43,6 +43,7 @@ export class CreateTaskComponent {
   public newTask(): void {
     this.taskForm = this.fb.group({
       id: [Math.floor(Math.random() * 1000)],
+      state: [false],
       nameTask: ['', [ Validators.required ]],
       limitDate: ['', [ Validators.required ]],
       people: this.fb.array([])
@@ -104,11 +105,11 @@ export class CreateTaskComponent {
   }
 
   public saveTask(): void {
-    if (this.taskForm.invalid) return;
-    if (this.isId) {
-      this.emitEditTask.emit(this.taskForm.value);
-    } else {
-      this.emitNewTask.emit(this.taskForm.value);
-    }
+    if (this.taskForm.valid) {
+      if (this.isId) this.emitEditTask.emit(this.taskForm.value);
+      else this.emitNewTask.emit(this.taskForm.value);
+      this.taskForm.reset();
+      this.people.clear();
+    };
   }
 }

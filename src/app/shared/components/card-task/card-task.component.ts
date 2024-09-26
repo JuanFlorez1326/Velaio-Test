@@ -1,8 +1,11 @@
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { AppState } from '../../ngrx/app.state';
+import { Component, Input } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { Task } from 'src/app/tasks/interfaces/tasks.interface';
-import { Router } from '@angular/router';
+import * as fromTasksActions from '../../../tasks/tasks-store/actions/tasks.actions';
 
 @Component({
   selector: 'app-card-task',
@@ -20,7 +23,8 @@ export class CardTaskComponent {
   @Input() isLoadingCard!: boolean | null;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   public editTask(task: Task): void {
@@ -28,6 +32,6 @@ export class CardTaskComponent {
   }
 
   public deleteTask(task: Task): void {
-    console.log('Delete task', task);
+    this.store.dispatch(new fromTasksActions.RemoveTask(task.id));
   }
 }
