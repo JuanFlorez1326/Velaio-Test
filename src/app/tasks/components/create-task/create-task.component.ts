@@ -27,8 +27,8 @@ export class CreateTaskComponent {
   public newTask(): void {
     this.taskForm = this.fb.group({
       id: [Math.floor(Math.random() * 1000)],
-      nameTask: ['Aprender Angular', [ Validators.required ]],
-      limitDate: ['30/12/2024', [ Validators.required ]],
+      nameTask: ['', [ Validators.required ]],
+      limitDate: ['', [ Validators.required ]],
       people: this.fb.array([])
     });
   }
