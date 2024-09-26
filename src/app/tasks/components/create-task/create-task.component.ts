@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,6 +9,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CreateTaskComponent {
 
   public taskForm!: FormGroup;
+
+  @Output() emitNewTask: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private fb: FormBuilder
@@ -24,8 +26,9 @@ export class CreateTaskComponent {
 
   public newTask(): void {
     this.taskForm = this.fb.group({
-      nameTask: ['', [ Validators.required ]],
-      limitDate: ['', [ Validators.required ]],
+      id: [Math.floor(Math.random() * 1000)],
+      nameTask: ['Aprender Angular', [ Validators.required ]],
+      limitDate: ['30/12/2024', [ Validators.required ]],
       people: this.fb.array([])
     });
   }
@@ -71,10 +74,11 @@ export class CreateTaskComponent {
   }
 
   public saveTask(): void {
-    if(this.taskForm.valid) {
-      console.log(this.taskForm.value);
+    if (this.taskForm.valid) {
+      this.emitNewTask.emit(this.taskForm.value);
+      this.newTask();
     } else {
-      alert('Invalid Form');
+      console.log('Invalid Form');
     }
   }
 }
