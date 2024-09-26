@@ -8,8 +8,7 @@ import * as fromReducers from '../../tasks-store/reducers/tasks.reducers';
 
 @Component({
   selector: 'app-all-tasks-page',
-  templateUrl: './all-tasks-page.component.html',
-  styleUrls: ['./all-tasks-page.component.scss']
+  templateUrl: './all-tasks-page.component.html'
 })
 export class AllTasksPageComponent {
 

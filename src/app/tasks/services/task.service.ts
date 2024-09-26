@@ -8,9 +8,7 @@ import { Task } from '../interfaces/tasks.interface';
 export class TaskService {
 
   public addTask(task: Task): Observable<any> {
-    console.log(task, 'Task for Service');
     const tasks = this.getTasksLocalStorage();
-    tasks.push(task);
     this.saveTaskLocalStorage(tasks);
     return of(task);
   }

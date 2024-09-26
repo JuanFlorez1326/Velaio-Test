@@ -1,8 +1,8 @@
+import { ActivatedRoute } from '@angular/router';
 import { Task } from '../../interfaces/tasks.interface';
+import { TaskService } from '../../services/task.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-create-task',
@@ -104,7 +104,6 @@ export class CreateTaskComponent {
   }
 
   public saveTask(): void {
-    debugger;
     if (this.taskForm.invalid) return;
     if (this.isId) {
       this.emitEditTask.emit(this.taskForm.value);

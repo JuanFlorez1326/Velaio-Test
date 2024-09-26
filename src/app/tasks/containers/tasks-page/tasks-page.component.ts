@@ -7,8 +7,7 @@ import * as fromTasksActions from '../../tasks-store/actions/tasks.actions';
 
 @Component({
   selector: 'app-tasks-page',
-  templateUrl: './tasks-page.component.html',
-  styleUrls: ['./tasks-page.component.scss']
+  templateUrl: './tasks-page.component.html'
 })
 export class TasksPageComponent {
 
@@ -18,5 +17,9 @@ export class TasksPageComponent {
 
   public saveNewTask(task: Task): void {
     this.store.dispatch(new fromTasksActions.AddTask(task));
+  }
+
+  public saveEditTask(task: Task): void {
+    this.store.dispatch(new fromTasksActions.UpdateTask(task));
   }
 }
