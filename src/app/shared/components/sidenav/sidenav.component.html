@@ -1,0 +1,39 @@
+<mat-sidenav-container fullscreen>
+    <mat-sidenav #sidenav mode="push">
+
+        <mat-toolbar>
+            <span>Menu</span>
+            <button class="btn-menu" (click)="sidenav.toggle()">
+                <a matTooltip="Close menu" class="icon-menu fa-solid fa-bars"></a>
+            </button>
+        </mat-toolbar>
+
+        <mat-nav-list>
+            <div class="navbar-all-options">
+                <div class="option" *ngFor="let option of sidenavOptions">
+                    <a class="navbar-option" routerLink="{{option.route}}" mat-list-item routerLinkActive="active" (click)="sidenav.toggle()">
+                        <em class="{{ option.icon }}"></em>
+                        <span routerLinkActive="active">{{ option.name }}</span>
+                    </a>
+                </div>
+            </div>
+        </mat-nav-list>
+        
+    </mat-sidenav>
+
+    <mat-toolbar>
+        <div class="navbar-section">
+            <div class="section-menu">
+                <button class="btn-menu btn-open" (click)="sidenav.toggle()"><a matTooltip="Open menu" class="icon-menu fa-solid fa-bars icon-menu__space"></a></button>
+                <div class="navbar-logo">
+                    <a class="navbar-logo-option" routerLink="/home">Tasks</a>
+                </div>
+            </div>
+        </div>
+    </mat-toolbar>
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+
+</mat-sidenav-container>

@@ -1,0 +1,95 @@
+
+@import '../../../../scss/main.index.scss';
+
+mat-toolbar, mat-sidenav, mat-sidenav-container  {
+    background-color: $back-color;
+}
+
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+        margin-right: 20px;
+        color: $blue-color;
+    }
+}
+
+mat-sidenav {
+    width: 200px;
+}
+
+.navbar-section {
+    width: 100%;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+
+    .section-menu {
+        margin-left: 10px;
+        display: flex;
+    }
+}
+
+.btn-menu {
+    border: none;
+    background-color: $back-color;
+
+    .icon-menu {
+        color: $blue-color;
+        font-size: 30px;
+        cursor: pointer;
+        
+        &__space {
+            margin-right: 20px;
+        }
+    }
+}
+
+.btn-open {
+    position: relative;
+    top: 5px;
+}
+
+.navbar-logo {
+    .navbar-logo-option {
+        position: relative;
+        top: 7px;
+        margin-left: 5px;
+        color: $blue-color;
+        text-decoration: none;
+        font-size: 30px;
+    }
+}
+
+.navbar-all-options {
+
+    .option {
+        
+        .navbar-option {
+            text-decoration: none;
+            padding-left: 15px;
+            font-size: 17px;
+            font-weight: 600;
+
+            span {
+                color: $color-text;
+
+            }
+
+            em {
+                font-size: 20px;
+                margin-right: 10px;
+                color: $color-text;
+            }
+        }
+
+        .active {
+            color: $blue-color;
+
+            em {
+                color: $blue-color;
+            }
+        }
+    }
+}
