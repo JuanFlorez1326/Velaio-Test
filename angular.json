@@ -30,7 +30,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+              "./node_modules/@fortawesome/fontawesome-free/scss/brands.scss"
             ],
             "scripts": []
           },
@@ -93,6 +98,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -100,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "3462b5e2-39ff-4656-9507-6c68586497ee"
   }
 }
