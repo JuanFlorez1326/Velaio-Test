@@ -21,6 +21,10 @@ const routes: Routes = [
         component: TasksPageComponent
       },
       {
+        path: 'edit/:id',
+        component: TasksPageComponent
+      },
+      {
         path: 'list',
         component: AllTasksPageComponent
       },

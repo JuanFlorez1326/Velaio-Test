@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { Task } from 'src/app/tasks/interfaces/tasks.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-task',
@@ -14,17 +15,16 @@ import { Task } from 'src/app/tasks/interfaces/tasks.interface';
   styleUrls: ['./card-task.component.scss']
 })
 export class CardTaskComponent {
+
   @Input() tasksCard: Task[] | null = [];
   @Input() isLoadingCard!: boolean | null;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tasksCard']) {
-      console.log(changes['tasksCard'].currentValue);
-    }
-  }
+  constructor(
+    private router: Router
+  ) {}
 
   public editTask(task: Task): void {
-    console.log('Edit task', task);
+    this.router.navigate(['/tasks/edit', task.id]);
   }
 
   public deleteTask(task: Task): void {
