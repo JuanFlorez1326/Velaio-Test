@@ -1,0 +1,67 @@
+@import '../../../../scss/main.index.scss';
+
+.create-task-form {
+    width: 500px;
+    padding: 16px;
+    margin: 20px auto;
+    box-shadow: $shadow-color;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .create-task-title {
+        font-size: 20px;
+        font-weight: 500;
+        padding-bottom: 16px;
+    }
+
+    .container-skills {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+
+        mat-form-field {
+            width: 90%;
+        }
+
+        .container-btn-skill {
+            button {
+                position: relative;
+                top: 4px;
+                left: 2px;
+            }
+        }
+    }
+
+    .btn-actions-tasks {
+        margin: 16px 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            width: 40%;
+        }
+    }
+
+    .container-btn-save {
+        display: flex;
+        justify-content: flex-end;
+        margin: 16px 0;
+
+        button {
+            width: 100px;
+            padding: 10px;
+        }
+    }
+
+    .form-field-group {
+        margin-bottom: 5px;
+    }
+}

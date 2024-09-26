@@ -6,6 +6,8 @@ import { CreateTaskComponent } from './components/create-task/create-task.compon
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { AllTasksPageComponent } from './containers/all-tasks-page/all-tasks-page.component';
+import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -37,7 +39,9 @@ const routes: Routes = [
     AllTasksPageComponent
   ],
   imports: [
+    SharedModule,
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ]
 })
