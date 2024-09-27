@@ -19,7 +19,7 @@
                 </button>
 
             </mat-card-title>
-            <mat-card-subtitle>{{ task.limitDate }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ task.limitDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content class="card-content">

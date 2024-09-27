@@ -89,7 +89,7 @@ export class CreateTaskComponent {
   public setTaskToForm(task: Task): void {
     this.taskForm.patchValue(task);
   
-    task.people.forEach((person) => {
+    task.people.forEach((person: Person) => {
       this.people.push(
         this.fb.group({
           fullName: [ person.fullName, [Validators.required, Validators.minLength(5)] ],
