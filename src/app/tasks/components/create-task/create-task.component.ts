@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
-import { Person, Task } from '../../interfaces/tasks.interface';
+import { Person, Skill, Task } from '../../interfaces/tasks.interface';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -89,13 +89,13 @@ export class CreateTaskComponent {
   public setTaskToForm(task: Task): void {
     this.taskForm.patchValue(task);
   
-    task.people.forEach((person) => {
+    task.people.forEach((person: Person) => {
       this.people.push(
         this.fb.group({
           fullName: [ person.fullName, [Validators.required, Validators.minLength(5)] ],
           age: [ person.age, [Validators.required, Validators.min(18)] ],
           skills: this.fb.array(
-            person.skills.map((skill: any) => 
+            person.skills.map((skill: Skill) => 
               this.fb.group({ nameSkill: [skill.nameSkill, [Validators.required]] })
             )
           )
@@ -107,7 +107,7 @@ export class CreateTaskComponent {
   public cancelEdit(): void {
     this.taskForm.reset();
     this.people.clear();
-    this.router.navigate(['/tasks/create']);
+    this.router.navigate(['/tasks/list']);
   }
 
   public saveTask(): void {

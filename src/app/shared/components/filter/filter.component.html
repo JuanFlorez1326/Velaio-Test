@@ -1,0 +1,6 @@
+<div class="filter-cards">
+    <button *ngFor="let btn of filterBtn" color="{{ currentFilter === btn.state ? 'primary' : 'basic' }}" 
+        [disabled]="!tasksCount" mat-raised-button 
+        (click)="onFilterChange(btn.state)"
+    > {{ btn.title }} </button>
+</div>

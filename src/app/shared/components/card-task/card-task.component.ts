@@ -3,23 +3,18 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AppState } from '../../ngrx/app.state';
 import { SharedModule } from '../../shared.module';
+import { FilterComponent } from '../filter/filter.component';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Task } from 'src/app/tasks/interfaces/tasks.interface';
 import * as fromTasksActions from '../../../tasks/tasks-store/actions/tasks.actions';
-
-interface FilterBtn {
-  title: string;
-  color: string;
-  typeBtn: string;
-  state: boolean | null;
-}
 
 @Component({
   selector: 'app-card-task',
   standalone: true,
   imports: [
     SharedModule,
-    CommonModule
+    CommonModule,
+    FilterComponent
   ],
   templateUrl: './card-task.component.html',
   styleUrls: ['./card-task.component.scss']
@@ -30,26 +25,7 @@ export class CardTaskComponent {
   @Input() isLoadingCard!: boolean | null;
 
   public taskByFilter: Task[] | null = [];
-  public filterBtn: FilterBtn[] = [
-    {
-      title: 'Completed',
-      color: 'primary',
-      typeBtn: 'raised',
-      state: true
-    },
-    {
-      title: 'Pending',
-      color: 'primary',
-      typeBtn: 'stroked',
-      state: false
-    },
-    {
-      title: 'All Tasks',
-      color: 'primary',
-      typeBtn: 'stroked',
-      state: null
-    }
-  ]
+  public currentFilter: string = 'all';
 
   constructor(
     private router: Router,
@@ -57,17 +33,27 @@ export class CardTaskComponent {
   ) {}
 
   ngOnInit(): void {
-    this.filterTasks(null);  
+    this.filterTasks('all');  
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tasksCard']) this.taskByFilter = this.tasksCard;
+    if (changes['tasksCard']) this.taskByFilter = this.tasksCard; 
   }
 
-  public filterTasks(state: boolean | null): void {
+  public filterTasks(state: string): void {    
     if (this.tasksCard) {
-      if (state === null) this.taskByFilter = this.tasksCard;
-      else this.taskByFilter = this.tasksCard.filter(task => task.state === state);
+      switch (state) {
+        case 'completed':
+          this.taskByFilter = this.tasksCard.filter(task => task.state === true);
+          break;
+        case 'pending':
+          this.taskByFilter = this.tasksCard.filter(task => task.state === false);
+          break;
+        case 'all':
+          this.taskByFilter = this.tasksCard;
+          break
+      }
+      this.currentFilter = state;
     }
   }
 

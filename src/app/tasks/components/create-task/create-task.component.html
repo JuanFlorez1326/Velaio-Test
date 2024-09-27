@@ -11,14 +11,13 @@
                 *ngIf="taskForm.get('nameTask')?.hasError('required') && taskForm.get('nameTask')?.touched"
             >This field is required</mat-error>
         </mat-form-field>
-        
+
         <mat-form-field class="form-field-group" appearance="outline">
-            <mat-label>Limit Date</mat-label>
-            <input type="text" matInput formControlName="limitDate">
-            <mat-error 
-                *ngIf="taskForm.get('limitDate')?.hasError('required') && taskForm.get('limitDate')?.touched"
-            >This field is required</mat-error>
+            <input matInput readonly [matDatepicker]="picker" formControlName="limitDate" placeholder="Limit date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
+
 
         <span class="create-task-title" *ngIf="taskForm.get('people')?.value.length > 0">
             Associated persons:
@@ -82,7 +81,7 @@
         <button mat-stroked-button color="primary" type="button" (click)="addPeople()">Add person</button>
 
         <div class="container-btn-save">
-            <button *ngIf="isId" mat-stroked-button color="warn" (click)="cancelEdit()">
+            <button *ngIf="isId" mat-stroked-button color="warn" (click)="cancelEdit(); $event.preventDefault()">
                 Cancel
             </button>
             <button mat-raised-button color="primary" [disabled]="this.taskForm.invalid" (click)="saveTask(); $event.preventDefault()">
