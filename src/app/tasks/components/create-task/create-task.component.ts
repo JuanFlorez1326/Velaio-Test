@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Task } from '../../interfaces/tasks.interface';
 import { TaskService } from '../../services/task.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
@@ -20,6 +20,7 @@ export class CreateTaskComponent {
   @Output() emitEditTask: EventEmitter<any> = new EventEmitter();
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private taskService: TaskService,
@@ -92,16 +93,32 @@ export class CreateTaskComponent {
 
   public setTaskToForm(task: Task): void {
     this.taskForm.patchValue(task);
-
+  
     task.people.forEach((person) => {
       this.people.push(
         this.fb.group({
-          fullName: person.fullName,
-          age: person.age,
-          skills: this.fb.array(person.skills.map((skill: any) => this.fb.group({ nameSkill: skill.nameSkill })))
+          fullName: [
+            person.fullName, 
+            [Validators.required, Validators.minLength(5), this.uniqueNameValidator.bind(this)]
+          ],
+          age: [
+            person.age, 
+            [Validators.required, Validators.min(18)]
+          ],
+          skills: this.fb.array(
+            person.skills.map((skill: any) => 
+              this.fb.group({ nameSkill: [skill.nameSkill, [Validators.required]] })
+            )
+          )
         })
       );
     });
+  }
+
+  public cancelEdit(): void {
+    this.taskForm.reset();
+    this.people.clear();
+    this.router.navigate(['/tasks/create']);
   }
 
   public saveTask(): void {
