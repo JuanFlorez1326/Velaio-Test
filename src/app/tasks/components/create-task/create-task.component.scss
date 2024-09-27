@@ -71,3 +71,9 @@
         border-top: 3px solid $color-text;
     }
 }
+
+@media only screen and (max-width: $max-mobile) {
+    .create-task-form {
+        width: 95%;
+    }
+}
