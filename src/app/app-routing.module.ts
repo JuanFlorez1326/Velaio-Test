@@ -9,6 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'tasks',
+    title: 'Velaio - Tasks',
     loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)
   },
   {

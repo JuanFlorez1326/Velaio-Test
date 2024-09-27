@@ -85,7 +85,7 @@
             <button *ngIf="isId" mat-stroked-button color="warn" (click)="cancelEdit()">
                 Cancel
             </button>
-            <button mat-raised-button color="primary" [disabled]="this.taskForm.invalid" (click)="saveTask()">
+            <button mat-raised-button color="primary" [disabled]="this.taskForm.invalid" (click)="saveTask(); $event.preventDefault()">
                 Save Task
             </button>
         </div>

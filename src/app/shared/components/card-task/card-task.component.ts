@@ -7,6 +7,13 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { Task } from 'src/app/tasks/interfaces/tasks.interface';
 import * as fromTasksActions from '../../../tasks/tasks-store/actions/tasks.actions';
 
+interface FilterBtn {
+  title: string;
+  color: string;
+  typeBtn: string;
+  state: boolean | null;
+}
+
 @Component({
   selector: 'app-card-task',
   standalone: true,
@@ -23,8 +30,7 @@ export class CardTaskComponent {
   @Input() isLoadingCard!: boolean | null;
 
   public taskByFilter: Task[] | null = [];
-
-  public filterBtn = [
+  public filterBtn: FilterBtn[] = [
     {
       title: 'Completed',
       color: 'primary',

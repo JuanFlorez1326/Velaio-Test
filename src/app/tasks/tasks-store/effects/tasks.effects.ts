@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Task } from '../../interfaces/tasks.interface';
 import * as fromActions from '../actions/tasks.actions';
 import { TaskService } from '../../services/task.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Observable, catchError, map, mergeMap, of } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class TasksEffects {
@@ -71,7 +71,7 @@ export class TasksEffects {
             ofType(fromActions.TasksActionsTypes.REMOVE_TASK),
             mergeMap((action: fromActions.RemoveTask) => {
                 return this.taskService.deleteTask(action.payload).pipe(
-                    map((response: any) => {
+                    map(() => {
                         return new fromActions.LoadTasks();
                     }),
                     catchError((error: any) => {
