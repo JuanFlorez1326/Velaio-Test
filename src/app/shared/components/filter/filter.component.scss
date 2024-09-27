@@ -1,0 +1,19 @@
+@import '../../../../scss/main.index.scss';
+
+.filter-cards {
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        margin: 0 10px;
+        width: 110px;
+    }
+}
+
+@media only screen and (max-width: $max-mobile) {
+    .filter-cards {
+        width: 100%;
+        margin-top: 20px;
+    }
+}

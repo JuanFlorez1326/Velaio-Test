@@ -1,9 +1,8 @@
-<div class="filter-cards">
-    <button *ngFor="let btn of filterBtn" color="{{ currentFilter === btn.state ? 'primary' : 'basic' }}" 
-        [disabled]="!tasksCard?.length" mat-raised-button 
-        (click)="filterTasks(btn.state)"
-    > {{ btn.title }} </button>
-</div>
+<app-filter 
+  [tasksCount]="tasksCard?.length || 0" 
+  [currentFilter]="currentFilter" 
+  (filterChange)="filterTasks($event)">
+</app-filter>
 
 <div *ngIf="!isLoadingCard" class="container-all-cards">
     <mat-card class="card-task" *ngFor="let task of taskByFilter" [id]="task.id">

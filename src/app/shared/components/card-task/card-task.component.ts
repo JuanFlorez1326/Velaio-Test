@@ -3,23 +3,18 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AppState } from '../../ngrx/app.state';
 import { SharedModule } from '../../shared.module';
+import { FilterComponent } from '../filter/filter.component';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { Task } from 'src/app/tasks/interfaces/tasks.interface';
 import * as fromTasksActions from '../../../tasks/tasks-store/actions/tasks.actions';
-
-interface FilterBtn {
-  title: string;
-  color: string;
-  typeBtn: string;
-  state: string;
-}
 
 @Component({
   selector: 'app-card-task',
   standalone: true,
   imports: [
     SharedModule,
-    CommonModule
+    CommonModule,
+    FilterComponent
   ],
   templateUrl: './card-task.component.html',
   styleUrls: ['./card-task.component.scss']
@@ -31,26 +26,6 @@ export class CardTaskComponent {
 
   public taskByFilter: Task[] | null = [];
   public currentFilter: string = 'all';
-  public filterBtn: FilterBtn[] = [
-    {
-      title: 'Completed',
-      color: 'primary',
-      typeBtn: 'raised',
-      state: 'completed'
-    },
-    {
-      title: 'Pending',
-      color: 'primary',
-      typeBtn: 'stroked',
-      state: 'pending'
-    },
-    {
-      title: 'All Tasks',
-      color: 'primary',
-      typeBtn: 'stroked',
-      state: 'all'
-    }
-  ]
 
   constructor(
     private router: Router,
