@@ -1,6 +1,6 @@
-import { ActivatedRoute } from '@angular/router';
-import { Task } from '../../interfaces/tasks.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
+import { Person, Task } from '../../interfaces/tasks.interface';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -16,10 +16,11 @@ export class CreateTaskComponent {
 
   @Input() taskToEdit: Task | null = null;
 
-  @Output() emitNewTask: EventEmitter<any> = new EventEmitter();
-  @Output() emitEditTask: EventEmitter<any> = new EventEmitter();
+  @Output() emitNewTask: EventEmitter<Task> = new EventEmitter();
+  @Output() emitEditTask: EventEmitter<Task> = new EventEmitter();
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private taskService: TaskService,
@@ -33,6 +34,7 @@ export class CreateTaskComponent {
       this.isId = true;
       const task = this.taskService.getTaskById(Number(taskId));
       this.setTaskToForm(task);
+      this.taskForm.updateValueAndValidity();
     }
   }
 
@@ -43,6 +45,7 @@ export class CreateTaskComponent {
   public newTask(): void {
     this.taskForm = this.fb.group({
       id: [Math.floor(Math.random() * 1000)],
+      state: [false],
       nameTask: ['', [ Validators.required ]],
       limitDate: ['', [ Validators.required ]],
       people: this.fb.array([])
@@ -51,16 +54,10 @@ export class CreateTaskComponent {
 
   public newPeople(): FormGroup {
     return this.fb.group({
-      fullName: ['', [ Validators.required, Validators.minLength(5), this.uniqueNameValidator.bind(this) ]],
+      fullName: ['', [ Validators.required, Validators.minLength(5) ]],
       age: [null, [ Validators.required, Validators.min(18) ]],
       skills: this.fb.array([this.newSkill()], Validators.required)
     });
-  }
-
-  public uniqueNameValidator(control: any) {
-    const names = this.people.value.map((persona: any) => persona.nombre);
-    if (names.includes(control.value)) return { nameExists: true };
-    return;
   }
 
   public newSkill(): FormGroup {
@@ -91,24 +88,34 @@ export class CreateTaskComponent {
 
   public setTaskToForm(task: Task): void {
     this.taskForm.patchValue(task);
-
+  
     task.people.forEach((person) => {
       this.people.push(
         this.fb.group({
-          fullName: person.fullName,
-          age: person.age,
-          skills: this.fb.array(person.skills.map((skill: any) => this.fb.group({ nameSkill: skill.nameSkill })))
+          fullName: [ person.fullName, [Validators.required, Validators.minLength(5)] ],
+          age: [ person.age, [Validators.required, Validators.min(18)] ],
+          skills: this.fb.array(
+            person.skills.map((skill: any) => 
+              this.fb.group({ nameSkill: [skill.nameSkill, [Validators.required]] })
+            )
+          )
         })
       );
     });
   }
 
+  public cancelEdit(): void {
+    this.taskForm.reset();
+    this.people.clear();
+    this.router.navigate(['/tasks/create']);
+  }
+
   public saveTask(): void {
-    if (this.taskForm.invalid) return;
-    if (this.isId) {
-      this.emitEditTask.emit(this.taskForm.value);
-    } else {
-      this.emitNewTask.emit(this.taskForm.value);
-    }
+    if (this.taskForm.valid) {
+      if (this.isId) this.emitEditTask.emit(this.taskForm.value);
+      else this.emitNewTask.emit(this.taskForm.value);
+      this.taskForm.reset();
+      this.people.clear();
+    };
   }
 }

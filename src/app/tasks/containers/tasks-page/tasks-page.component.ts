@@ -1,5 +1,4 @@
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { Task } from '../../interfaces/tasks.interface';
 import { AppState } from 'src/app/shared/ngrx/app.state';

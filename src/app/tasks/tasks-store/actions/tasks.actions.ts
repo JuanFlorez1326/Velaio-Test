@@ -39,12 +39,12 @@ export class AddTaskSuccess implements Action {
 
 export class RemoveTask implements Action {
     readonly type = TasksActionsTypes.REMOVE_TASK;
-    constructor(public payload: any) {}
+    constructor(public payload: number) {}
 }
 
 export class RemoveTaskSuccess implements Action {
     readonly type = TasksActionsTypes.REMOVE_TASK_SUCCESS;
-    constructor(public payload: any) {}
+    constructor(public payload: number) {}
 }
 
 export class UpdateTask implements Action {

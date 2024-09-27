@@ -58,6 +58,7 @@
         button {
             width: 100px;
             padding: 10px;
+            margin-left: 10px;
         }
     }
 
@@ -68,5 +69,11 @@
     .divider-sections {
         margin: 16px 0;
         border-top: 3px solid $color-text;
+    }
+}
+
+@media only screen and (max-width: $max-mobile) {
+    .create-task-form {
+        width: 95%;
     }
 }

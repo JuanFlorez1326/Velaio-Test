@@ -1,17 +1,18 @@
 <div class="filter-cards">
-    <button mat-raised-button color="primary">Completed</button>
-    <button mat-stroked-button color="primary">Pending</button>
+    <button *ngFor="let btn of filterBtn" mat-raised-button color="{{btn.color}}" (click)="filterTasks(btn.state)">
+        {{ btn.title }}
+    </button>
 </div>
 
 <div *ngIf="!isLoadingCard" class="container-all-cards">
-    <mat-card class="card-task" *ngFor="let task of tasksCard" [id]="task.id">
+    <mat-card class="card-task" *ngFor="let task of taskByFilter" [id]="task.id">
         <mat-card-header>
             <mat-card-title>
-                <button mat-icon-button *ngIf="true">
+                <button mat-icon-button *ngIf="!task.state" (click)="completeTask(task)" matTooltip="Pending">
                     <em class="fa-regular fa-circle"></em>
                 </button>
 
-                <button mat-icon-button *ngIf="false">
+                <button mat-icon-button *ngIf="task.state" (click)="uncompleteTask(task)" matTooltip="Completed">
                     <em class="fa-regular fa-circle-check"></em>
                 </button>
 

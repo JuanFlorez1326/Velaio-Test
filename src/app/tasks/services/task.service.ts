@@ -7,8 +7,9 @@ import { Task } from '../interfaces/tasks.interface';
 })
 export class TaskService {
 
-  public addTask(task: Task): Observable<any> {
+  public addTask(task: Task): Observable<Task> {
     const tasks = this.getTasksLocalStorage();
+    tasks.push(task);
     this.saveTaskLocalStorage(tasks);
     return of(task);
   }
@@ -19,27 +20,27 @@ export class TaskService {
   
   public getTaskById(id: number) {
     const tasks = this.getTasksLocalStorage();
-    return tasks.find((task: any) => task.id === id);
+    return tasks.find((task: Task) => task.id === id);
   }
 
-  public updateTask( id: number, task: Task) {
+  public updateTask( id: number, task: Task): Observable<Task> {
     const tasks = this.getTasksLocalStorage();
-    const index = tasks.findIndex((task: any) => task.id === id);
+    const index = tasks.findIndex((task: Task) => task.id === id);
     tasks[index] = task;
     this.saveTaskLocalStorage(tasks);
     return of(task);
   }
 
-  public checkCompletedTask(id: number) {
+  public checkCompletedTask(id: number): void {
     const tasks = this.getTasksLocalStorage();
-    const index = tasks.findIndex((task: any) => task.id === id);
+    const index = tasks.findIndex((task: Task) => task.id === id);
     tasks[index].completed = !tasks[index].completed;
     this.saveTaskLocalStorage(tasks);
   }
 
-  public deleteTask(id: number) {
+  public deleteTask(id: number): Observable<number> {
     const tasks = this.getTasksLocalStorage();
-    const index = tasks.findIndex((task: any) => task.id === id);
+    const index = tasks.findIndex((task: Task) => task.id === id);
     tasks.splice(index, 1);
     this.saveTaskLocalStorage(tasks);
     return of(id);
@@ -49,7 +50,7 @@ export class TaskService {
     return JSON.parse(localStorage.getItem('tasks') || '[]');
   }
 
-  private saveTaskLocalStorage(task: Task) {
+  private saveTaskLocalStorage(task: Task): void {
     localStorage.setItem('tasks', JSON.stringify(task));
   }
 

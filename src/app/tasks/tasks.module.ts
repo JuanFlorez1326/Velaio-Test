@@ -18,14 +18,17 @@ const routes: Routes = [
     children: [
       {
         path: 'create',
+        title: 'Velaio - Create Task',
         component: TasksPageComponent
       },
       {
         path: 'edit/:id',
+        title: 'Velaio - Edit Task',
         component: TasksPageComponent
       },
       {
         path: 'list',
+        title: 'Velaio - List Tasks',
         component: AllTasksPageComponent
       },
       {
