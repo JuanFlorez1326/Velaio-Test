@@ -107,7 +107,7 @@ export class CreateTaskComponent {
   public cancelEdit(): void {
     this.taskForm.reset();
     this.people.clear();
-    this.router.navigate(['/tasks/create']);
+    this.router.navigate(['/tasks/list']);
   }
 
   public saveTask(): void {

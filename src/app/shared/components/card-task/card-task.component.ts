@@ -11,7 +11,7 @@ interface FilterBtn {
   title: string;
   color: string;
   typeBtn: string;
-  state: boolean | null;
+  state: string;
 }
 
 @Component({
@@ -30,24 +30,25 @@ export class CardTaskComponent {
   @Input() isLoadingCard!: boolean | null;
 
   public taskByFilter: Task[] | null = [];
+  public currentFilter: string = 'all';
   public filterBtn: FilterBtn[] = [
     {
       title: 'Completed',
       color: 'primary',
       typeBtn: 'raised',
-      state: true
+      state: 'completed'
     },
     {
       title: 'Pending',
       color: 'primary',
       typeBtn: 'stroked',
-      state: false
+      state: 'pending'
     },
     {
       title: 'All Tasks',
       color: 'primary',
       typeBtn: 'stroked',
-      state: null
+      state: 'all'
     }
   ]
 
@@ -57,17 +58,27 @@ export class CardTaskComponent {
   ) {}
 
   ngOnInit(): void {
-    this.filterTasks(null);  
+    this.filterTasks('all');  
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tasksCard']) this.taskByFilter = this.tasksCard;
+    if (changes['tasksCard']) this.taskByFilter = this.tasksCard; 
   }
 
-  public filterTasks(state: boolean | null): void {
+  public filterTasks(state: string): void {    
     if (this.tasksCard) {
-      if (state === null) this.taskByFilter = this.tasksCard;
-      else this.taskByFilter = this.tasksCard.filter(task => task.state === state);
+      switch (state) {
+        case 'completed':
+          this.taskByFilter = this.tasksCard.filter(task => task.state === true);
+          break;
+        case 'pending':
+          this.taskByFilter = this.tasksCard.filter(task => task.state === false);
+          break;
+        case 'all':
+          this.taskByFilter = this.tasksCard;
+          break
+      }
+      this.currentFilter = state;
     }
   }
 

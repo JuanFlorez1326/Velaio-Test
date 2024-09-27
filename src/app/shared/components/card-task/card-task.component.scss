@@ -15,18 +15,84 @@
     display: flex;
     flex-wrap: wrap;
     margin: 20px;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .card-task {
     width: 350px;
     margin: 15px;
 
+    mat-card-header {
+        margin-bottom: 20px;
+
+        mat-card-title {
+
+            button {
+                position: absolute;
+                right: 10px;
+                border-radius: 4px;
+                animation: zoom 1.5s infinite;
+            }
+
+            @keyframes zoom {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.2);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+        }
+
+        mat-card-subtitle, strong {
+            color: $blue-color;
+        }
+    }
+
+    .card-content {
+
+        .divider-header {
+            margin-top: 10px;
+        }
+
+        .bottom-divider-persons {
+            position: relative;
+            right: 45px;
+            width: 325px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+
     .actions-card {
         position: absolute;
         bottom: 10px;
         right: 10px;
         border-radius: 4px;
+    }
+}
+
+.no-found-tasks {
+    width: 80%;
+    margin: auto;
+    border-radius: 5px;
+
+    .container-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+        margin: 10px;
+        border: 1px dashed $color-text;
+        border-radius: 5px;
+
+        span {
+            color: $color-text;
+            text-align: center;
+        }
     }
 }
 
